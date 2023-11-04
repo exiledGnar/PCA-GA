@@ -1,12 +1,12 @@
-% 分类器训练
-classifier = fitcdiscr(projectedFeatures, y);  % 使用降维后的特征值矩阵训练分类器
-
-% 分类器预测
-x1=X(658:757, 2:6)* selectedComponents;
-predictions = predict(classifier, x1);  % 对特征值矩阵进行分类预测
+%准备测试集
+x1=X(658:757, 2:6);
+y1=X(658:757, 1);
+% LDA降维
+ldaModel = fitcdiscr(features, y);
+%预测
+predictions = predict(ldaModel, x1);
 
 % 计算评估指标
-y1=X(658:757, 1);
 confusionMat = confusionmat(y1, predictions);  % 计算混淆矩阵
 truePositives = confusionMat(2, 2);  % 真正例数目
 falsePositives = confusionMat(1, 2);  % 假正例数目
